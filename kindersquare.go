@@ -5,7 +5,7 @@ import (
 	"math"
 )
 
-func main() {
+func mainKinderSquare() {
 	arr := []int{3, 1, 4}
 	kinderSquare(arr)
 }
