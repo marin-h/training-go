@@ -8,19 +8,19 @@ type Node struct {
 }
 
 func main() {
+
 	root := Node{1, 1, []*Node{}}
-	//end := Node{2, 5, []*Node{}} // YES
-	end := Node{6, 3, []*Node{}} //	NO
-	result := "NO"
-	draw(&root, end, &result)
-	fmt.Println(result)
+
+	goals := [2]Node{{2, 5, []*Node{}}, Node{6, 3, []*Node{}}}
+
+	for _, end := range goals {
+		result := "NO"
+		draw(&root, end, &result)
+		fmt.Println(result)
+	}
 }
 
 func draw(current *Node, end Node, result *string) {
-
-	if current.x >= 500 || current.y >= 500 {
-		return
-	}
 
 	current.children = append(current.children, &Node{current.x + current.y, current.y, []*Node{}})
 	current.children = append(current.children, &Node{current.x, current.y + current.x, []*Node{}})
@@ -29,7 +29,7 @@ func draw(current *Node, end Node, result *string) {
 		if match(*next, end) {
 			*result = "YES"
 			return
-		} else if next.x <= end.x && next.y <= end.y {
+		} else if near(*next, end) {
 			draw(next, end, result)
 		}
 	}
@@ -37,4 +37,10 @@ func draw(current *Node, end Node, result *string) {
 
 func match(some Node, goal Node) bool {
 	return some.x == goal.x && some.y == goal.y
+}
+
+func near(next Node, end Node) bool {
+	// check if end node is still in current path, since we only move forward
+	// check next node not overflowing 500 position for x and y
+	return next.x <= end.x && next.y <= end.y && next.x <= 500 && next.y <= 500
 }
