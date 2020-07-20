@@ -7,16 +7,22 @@ type Node struct {
 	children []*Node
 }
 
+type Path struct {
+	root, end Node
+	exist     string
+}
+
 func main() {
 
 	root := Node{1, 1, []*Node{}}
+	goal1 := Node{2, 5, []*Node{}}
+	goal2 := Node{6, 3, []*Node{}}
+	paths := [2]Path{{root, goal1, ""}, {root, goal2, ""}}
 
-	goals := [2]Node{{2, 5, []*Node{}}, Node{6, 3, []*Node{}}}
-
-	for _, end := range goals {
-		result := "NO"
-		draw(&root, end, &result)
-		fmt.Println(result)
+	for _, path := range paths {
+		path.exist = "NO"
+		draw(&path.root, path.end, &path.exist)
+		fmt.Println(path.exist)
 	}
 }
 
