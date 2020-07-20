@@ -9,8 +9,8 @@ type Node struct {
 
 func main() {
 	root := Node{1, 1, []*Node{}}
-	end := Node{2, 5, []*Node{}} // NO
-	//	end := Node{6, 3, []*Node{}}	YES
+	//end := Node{2, 5, []*Node{}} // YES
+	end := Node{6, 3, []*Node{}} //	NO
 	result := "NO"
 	draw(&root, end, &result)
 	fmt.Println(result)
@@ -25,10 +25,11 @@ func draw(current *Node, end Node, result *string) {
 	current.children = append(current.children, &Node{current.x + current.y, current.y, []*Node{}})
 	current.children = append(current.children, &Node{current.x, current.y + current.x, []*Node{}})
 
-	if match(*current.children[0], end) || match(*current.children[1], end) {
-		*result = "YES"
-	} else {
-		for _, next := range current.children {
+	for _, next := range current.children {
+		if match(*next, end) {
+			*result = "YES"
+			return
+		} else if next.x <= end.x && next.y <= end.y {
 			draw(next, end, result)
 		}
 	}
