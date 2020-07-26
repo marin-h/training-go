@@ -9,7 +9,6 @@ type Node struct {
 
 type Path struct {
 	root, end Node
-	exist     string
 }
 
 func main() {
@@ -17,28 +16,29 @@ func main() {
 	root := Node{1, 1, []*Node{}}
 	goal1 := Node{2, 5, []*Node{}}
 	goal2 := Node{6, 3, []*Node{}}
-	paths := [2]Path{{root, goal1, ""}, {root, goal2, ""}}
+	paths := [2]Path{{root, goal1}, {root, goal2}}
 
 	for _, path := range paths {
-		path.exist = "NO"
-		draw(&path.root, path.end, &path.exist)
-		fmt.Println(path.exist)
+		if draw(&path.root, path.end) {
+			fmt.Println("YES")
+		} else {
+			fmt.Println("NO")
+		}
 	}
 }
 
-func draw(current *Node, end Node, result *string) {
+func draw(current *Node, end Node) bool {
 
 	current.children = append(current.children, &Node{current.x + current.y, current.y, []*Node{}})
 	current.children = append(current.children, &Node{current.x, current.y + current.x, []*Node{}})
-
 	for _, next := range current.children {
 		if match(*next, end) {
-			*result = "YES"
-			return
+			return true
 		} else if near(*next, end) {
-			draw(next, end, result)
+			return draw(next, end)
 		}
 	}
+	return false
 }
 
 func match(some Node, goal Node) bool {
