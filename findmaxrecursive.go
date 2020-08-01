@@ -5,9 +5,9 @@ import (
 	"math"
 )
 
-func main() {
+func mainMaxRecursive() {
 	// Grokking Algorithms Exercise 4.3
-	anArray := []float64{3, 41, 314, 32}
+	anArray := []float64{3, 314, 41, 32}
 	fmt.Println("max number is", findMax(anArray, 0))
 }
 
@@ -16,6 +16,6 @@ func findMax(anArray []float64, max float64) float64 {
 	if len(anArray) == 0 {
 		return max
 	} else {
-		return findMax(anArray[2:len(anArray)], math.Max(anArray[0], anArray[1]))
+		return findMax(anArray[1:], math.Max(anArray[0], max))
 	}
 }
