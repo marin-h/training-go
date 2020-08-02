@@ -11,7 +11,7 @@ type Path struct {
 	root, end Node
 }
 
-func mainMainfield() {
+func main() {
 
 	root := Node{1, 1, []*Node{}}
 	goal1 := Node{2, 5, []*Node{}}

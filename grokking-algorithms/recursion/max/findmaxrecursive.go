@@ -5,7 +5,7 @@ import (
 	"math"
 )
 
-func mainMaxRecursive() {
+func main() {
 	// Grokking Algorithms Exercise 4.3
 	anArray := []float64{3, 314, 41, 32}
 	fmt.Println("max number is", findMax(anArray, 0))
