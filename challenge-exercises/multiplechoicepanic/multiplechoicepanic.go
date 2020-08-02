@@ -9,7 +9,7 @@ type Question struct {
 }
 
 type Exam struct {
-	PointsPass int
+	PointsPass float32
 	Questions  []Question
 }
 
@@ -17,8 +17,7 @@ func (exam Exam) isExpectedToPassExam() bool {
 	var oddsPass int
 	var oddsFail int
 	var examOdds [][]float32
-
-	// TODO: put this in another function
+	// put together the odds for each question
 	for _, question := range exam.Questions {
 		var questionOdds []float32
 		questionOdds = append(questionOdds, question.PointsRight)
@@ -28,13 +27,18 @@ func (exam Exam) isExpectedToPassExam() bool {
 		questionOdds = append(questionOdds, 0)
 		examOdds = append(examOdds, questionOdds)
 	}
-
-	// for i, questionOdds := range examOdds {
-	// 	for j, questionOdd := range questionOdds {
-	// 	}
-	// }
-
-	fmt.Println(examOdds)
+	// iterate over the odds now, and decide if they pass or fail
+	for i, questionOdds := range examOdds {
+		for _, questionOdd := range questionOdds {
+			odd := questionOdds[i] + questionOdd
+			if odd >= exam.PointsPass {
+				oddsPass = oddsPass + 1
+			} else {
+				oddsFail = oddsFail + 1
+			}
+		}
+	}
+	// check if odds are more passing than failing
 	return oddsPass > oddsFail
 }
 
@@ -44,6 +48,10 @@ func main() {
 	exam2 := Exam{2, []Question{{2, -1, 0.5}, {4, -4, 1}, {2, -1, 1}}}
 	exams := []Exam{exam1, exam2}
 	for _, exam := range exams {
-		fmt.Println(exam.isExpectedToPassExam())
+		if exam.isExpectedToPassExam() {
+			fmt.Println("YES")
+		} else {
+			fmt.Println("NO")
+		}
 	}
 }
