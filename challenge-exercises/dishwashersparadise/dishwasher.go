@@ -8,13 +8,12 @@ func main() {
 	var limit = 2
 
 	add := func(id int) {
-		stack := stacks[len(stacks)-1]
-		stack = append(stack, id)
-		stacks[len(stacks)-1] = stack
-		if len(stack) == limit {
+		// if last stack is full, add a new one
+		if len(stacks[len(stacks)-1]) == limit {
 			aStack := []int{}
 			stacks = append(stacks, aStack)
 		}
+		stacks[len(stacks)-1] = append(stacks[len(stacks)-1], id)
 	}
 
 	remove := func() int {
