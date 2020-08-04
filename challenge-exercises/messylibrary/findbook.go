@@ -17,18 +17,18 @@ func findBookPosition(bookIDList []int, id int) int {
 	position := (left + right) / 2
 
 	for bookIDList[position] != id {
+		position = (left + right) / 2
 		if bookIDList[position] > id {
 			if bookIDList[position+1] == id {
-				return position + 1
+				position = position + 1
 			}
 			right = position
 		} else if bookIDList[position] < id {
 			if bookIDList[position-1] == id {
-				return position - 1
+				position = position - 1
 			}
 			left = position
 		}
-		position = (left + right) / 2
 	}
 	return position
 }
