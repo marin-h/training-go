@@ -9,23 +9,12 @@ func main() {
 }
 
 func getAnimals(weights []int, capacity int) [2]int {
-	max := 0
-	min := 0
-	for i := range weights {
-		if weights[i] > weights[max] {
-			max = i
-		} else if weights[i] <= weights[min] {
-			min = i
-		}
-		// check if max and min sum up to equal capacity
-		if (i == len(weights)-1) && weights[max]+weights[min] == capacity {
-			return [2]int{weights[max], weights[min]}
-		}
-	}
-	// if no match until here, we need to lookup another match for our max value
-	for i := range weights {
-		if i != max && capacity-weights[max] == weights[i] {
-			return [2]int{weights[max], weights[i]}
+	for i := 0; i < len(weights)-1; i++ {
+		for j := i + 1; j < len(weights); j++ {
+			fmt.Println(i, j)
+			if weights[i]+weights[j] == capacity {
+				return [2]int{weights[i], weights[j]}
+			}
 		}
 	}
 	// otherwise return empty truck
