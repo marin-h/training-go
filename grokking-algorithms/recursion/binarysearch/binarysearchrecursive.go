@@ -9,7 +9,7 @@ func main() {
 	anArray := []float64{4, 8, 9, 15, 66, 73, 102}
 	var elem float64 = 8
 
-	if position := binarySearch(0, len(anArray), anArray, elem); position > 0 {
+	if position := binarySearch(0, len(anArray), anArray, elem); position >= 0 {
 		fmt.Println("number position is", position)
 	} else {
 		fmt.Println("number not found")
@@ -39,5 +39,4 @@ func binarySearch(start int, end int, anArray []float64, elem float64) int {
 		}
 		return binarySearch(start, end, anArray, elem)
 	}
-	return -1
 }
