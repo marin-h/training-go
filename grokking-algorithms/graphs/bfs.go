@@ -33,6 +33,7 @@ func bfs(graph map[string][]string) string {
 		if matches(person) {
 			return "found " + person
 		} else {
+			fmt.Println("visiting", person, "-> adding their friends to queue")
 			visited[person] = true
 			queue = append(queue, graph[person]...)
 		}
